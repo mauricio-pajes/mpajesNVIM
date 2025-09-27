@@ -4,8 +4,8 @@ vim.api.nvim_create_user_command("R", function()
   -- Guarda el archivo antes de compilar
   vim.cmd("w")
 
-  local file     = vim.fn.expand("%:p")
-  local ext      = vim.fn.expand("%:e")
+  local file = vim.fn.expand("%:p")
+  local ext = vim.fn.expand("%:e")
   local filename = vim.fn.expand("%:t:r")
   local cmd
 
@@ -25,6 +25,19 @@ vim.api.nvim_create_user_command("R", function()
     cmd = string.format("javac '%s' && java '%s'", file, filename)
   elseif ext == "rs" then
     cmd = string.format("rustc '%s' -o '%s.out' && ./'%s.out'", file, filename, filename)
+  elseif ext == "go" then
+    cmd = string.format("go run '%s'", file)
+  elseif ext == "lua" then
+    cmd = string.format("lua '%s'", file)
+  elseif ext == "asm" then
+    cmd = string.format(
+      "nasm -f elf32 '%s' -o '%s.o' && ld -m elf_i386 '%s.o' -o '%s.out' && ./'%s.out'",
+      file,
+      filename,
+      filename,
+      filename,
+      filename
+    )
   else
     vim.notify("❌ Lenguaje no soportado: " .. ext, vim.log.levels.ERROR)
     return

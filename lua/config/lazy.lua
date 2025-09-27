@@ -32,7 +32,7 @@ require("lazy").setup({
     version = false, -- usa el último commit
   },
 
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "vesper-colorscheme" } },
 
   checker = { -- búsqueda periódica de actualizaciones
     enabled = true,
